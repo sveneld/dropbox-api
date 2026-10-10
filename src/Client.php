@@ -4,7 +4,6 @@ namespace Spatie\Dropbox;
 
 use Exception;
 use GrahamCampbell\GuzzleFactory\GuzzleFactory;
-use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
@@ -72,7 +71,7 @@ class Client
             $this->tokenProvider = new InMemoryTokenProvider($accessTokenOrAppCredentials);
         }
 
-        $this->client = $client ?? new GuzzleClient(['handler' => GuzzleFactory::handler()]);
+        $this->client = $client ?? GuzzleFactory::make();
 
         $this->maxChunkSize = ($maxChunkSize < self::MAX_CHUNK_SIZE ? max($maxChunkSize, 1) : self::MAX_CHUNK_SIZE);
     }
